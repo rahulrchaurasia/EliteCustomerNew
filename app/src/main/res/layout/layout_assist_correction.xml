@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lyParent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+
+        android:padding="5dp">
+
+        <CheckBox
+            android:id="@+id/chkPrd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:clickable="false"
+
+            android:focusable="false" />
+
+        <TextView
+            android:id="@+id/txtTitle"
+            style="@style/TextViewStyle.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dp"
+
+            android:layout_marginRight="3dp"
+
+            android:layout_toRightOf="@+id/chkPrd"
+            android:text=""
+            android:textStyle="bold"></TextView>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:layout_below="@+id/txtTitle"
+            android:layout_marginTop="0dp"
+            android:background="@color/lightGrey" />
+
+
+        <EditText
+            android:id="@+id/etOld"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:hint="OLD  DATA"
+            android:maxLines="2"
+            android:minLines="2" />
+
+        <EditText
+            android:id="@+id/etNew"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:hint="NEW  DATA"
+            android:maxLines="2"
+            android:minLines="2" />
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/vLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_below="@+id/txtTitle"
+        android:layout_marginTop="0dp"
+        android:background="@color/lightGrey">
+
+    </View>
+</LinearLayout>
