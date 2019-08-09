@@ -73,7 +73,7 @@
                                         android:drawableLeft="@drawable/ic_name"
                                         android:drawablePadding="10dp"
                                         android:inputType="textCapWords"
-                                        android:maxLength="30" />
+                                        android:maxLength="100" />
 
                                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,7 +144,7 @@
                                         android:drawableLeft="@drawable/ic_email"
                                         android:drawablePadding="10dp"
                                         android:inputType="textEmailAddress"
-                                        android:maxLength="30" />
+                                        android:maxLength="200" />
 
                                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -340,7 +340,7 @@
                                     style="@style/Style.edittext"
 
                                     android:inputType="textPassword"
-                                    android:maxLength="10" />
+                                    android:maxLength="30" />
 
                             </com.google.android.material.textfield.TextInputLayout>
 

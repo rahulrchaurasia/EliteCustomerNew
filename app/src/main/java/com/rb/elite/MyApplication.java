@@ -10,7 +10,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class MyApplication extends Application {
 
-    private FirebaseAnalytics mFirebaseAnalytics;
+  //  private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     public void onCreate() {
@@ -30,17 +30,17 @@ public class MyApplication extends Application {
                 .build()
         );
 
-        mFirebaseAnalytics =FirebaseAnalytics.getInstance(this);
+       // mFirebaseAnalytics =FirebaseAnalytics.getInstance(this);
     }
 
-    public void logEvent(String ServiceName,String ServiceID,String ID){
-
-        Bundle bundle = new Bundle();
-        bundle.putString(ServiceName,ServiceID);
-        bundle.putString("User",ID);
-
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT,bundle);
-    }
+//    public void logEvent(String ServiceName,String ServiceID,String ID){
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putString(ServiceName,ServiceID);
+//        bundle.putString("User",ID);
+//
+//        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT,bundle);
+//    }
 
 
 }

@@ -378,7 +378,6 @@ public class DashBoardFragment extends BaseFragment implements View.OnClickListe
 
             case R.id.cvService:
 
-                ((MyApplication) getActivity().getApplication()).logEvent("CLICKED", "SERVICE", "" + loginEntity.getUser_id());
                 startActivity(new Intent(getActivity(), ServiceActivity.class));
                 break;
 
