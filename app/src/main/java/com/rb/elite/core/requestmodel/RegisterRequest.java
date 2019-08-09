@@ -47,6 +47,9 @@ public class RegisterRequest {
     private String PolicyStatus;
     private String ResponseStatus;
 
+
+    private String company_id;
+
     private String lat;
     private String lon;
 
@@ -231,5 +234,13 @@ public class RegisterRequest {
         this.user_id = user_id;
     }
 
+
+    public String getCompany_id() {
+        return company_id;
+    }
+
+    public void setCompany_id(String company_id) {
+        this.company_id = company_id;
+    }
 
 }

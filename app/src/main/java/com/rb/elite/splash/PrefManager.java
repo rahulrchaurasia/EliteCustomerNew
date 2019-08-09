@@ -46,6 +46,9 @@ public class PrefManager {
     private static final String CITY_CONSTATNT = "cityr_constatnt";
     private static final String PUSH_NOTIFY_DATA = "push_notify_data";
 
+    private static final String ELITE_COMPANY_NAME = "elite_company_name";
+    private static final String ELITE_COMPANY_ID = "elite_company_id";
+
     private static final String IS_DEVICE_TOKEN = "devicetoken";
     public static String DEVICE_ID = "deviceID";
     public static String NOTIFICATION_COUNTER = "Notification_Counter";
@@ -137,6 +140,8 @@ public class PrefManager {
     }
 
     //endregion
+
+
 
     //region master User Constant
 
@@ -303,6 +308,27 @@ public class PrefManager {
     public String getToken() {
         return pref.getString(IS_DEVICE_TOKEN, "");
     }
+
+
+    //region Company Identification
+    public void setCompanyID(String compID , String compName) {
+        editor.putString(ELITE_COMPANY_ID, compID);
+        editor.putString(ELITE_COMPANY_NAME, compName);
+
+        editor.commit();
+    }
+
+    public String getCompanyID() {
+
+        return pref.getString(ELITE_COMPANY_ID, "0");
+    }
+
+    public String getCompanyName() {
+
+        return pref.getString(ELITE_COMPANY_NAME, "");
+    }
+    //endregion
+
 
     public void clearUserCache() {
 

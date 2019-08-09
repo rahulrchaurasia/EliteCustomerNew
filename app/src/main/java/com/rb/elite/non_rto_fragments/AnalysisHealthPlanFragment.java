@@ -5,8 +5,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +21,10 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.rb.elite.BaseFragment;
@@ -52,7 +54,7 @@ import java.util.Calendar;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnClickListener,CompoundButton.OnCheckedChangeListener, IResponseSubcriber {
+public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, IResponseSubcriber {
 
     // Service : 14
 
@@ -73,12 +75,12 @@ public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnC
     DataBaseController dataBaseController;
     UserEntity loginEntity;
     Button btnBooked;
-
+    CardView cvClient;
 
     RTOServiceEntity serviceEntity;
 
     ScrollView scrollView;
-    LinearLayout lyVehicle, lvLogo, lyTAT ,lyFamily;
+    LinearLayout lyVehicle, lvLogo, lyTAT, lyFamily;
     RelativeLayout rlDoc;
     ImageView ivLogo, ivClientLogo;
 
@@ -156,11 +158,10 @@ public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnC
         btnBooked = (Button) view.findViewById(R.id.btnBooked);
         etCity = (EditText) view.findViewById(R.id.etCity);
         etPincode = (EditText) view.findViewById(R.id.etPincode);
-
+        cvClient = (CardView) view.findViewById(R.id.cvClient);
 
         etNameOfProposer = (EditText) view.findViewById(R.id.etNameOfProposer);
         etSumAssured = (EditText) view.findViewById(R.id.etSumAssured);
-
 
 
         radioGroup = view.findViewById(R.id.radioGroup);
@@ -188,7 +189,7 @@ public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnC
         etDOB = view.findViewById(R.id.etDOB);
 
         // region Floater
-        radioGroup   = view.findViewById(R.id.radioGroup);
+        radioGroup = view.findViewById(R.id.radioGroup);
         rbIndividual = view.findViewById(R.id.rbIndividual);
         rbFloater = view.findViewById(R.id.rbFloater);
 
@@ -215,19 +216,28 @@ public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnC
         rbIndividual.setOnCheckedChangeListener(this);
 
 
-
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
+        if (userConstatntEntity.getCompanyId() != null) {
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
+            if ((!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals(""))) {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            } else {
+
+                cvClient.setVisibility(View.GONE);
+            }
+        }else {
+            cvClient.setVisibility(View.GONE);
+        }
 
 
     }
-
 
 
     private boolean validate() {
@@ -242,12 +252,10 @@ public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnC
         } else if (spNoOfFamily.getSelectedItemPosition() == 0) {
             getCustomToast("Please Select No. Of Family Member");
             return false;
-        }
-        else if (!validateCity(etCity)) {
+        } else if (!validateCity(etCity)) {
 
             return false;
-        }
-         else if (!validatePinCode(etPincode)) {
+        } else if (!validatePinCode(etPincode)) {
             return false;
         }
         return true;
@@ -263,6 +271,7 @@ public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnC
             lvLogo.setVisibility(View.GONE);
         }
     }
+
     private void setScrollatBottom() {
         scrollView.postDelayed(new Runnable() {
             @Override
@@ -309,7 +318,7 @@ public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnC
     @Override
     public void onClick(View view) {
 
-        Constants.hideKeyBoard(view,mContext);
+        Constants.hideKeyBoard(view, mContext);
         switch (view.getId()) {
 
             case R.id.etDOB:
@@ -347,7 +356,6 @@ public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnC
                 startActivityForResult(new Intent(getActivity(), SearchCityActivity.class), Constants.SEARCH_CITY_CODE);
 
                 break;
-
 
 
         }
@@ -422,7 +430,7 @@ public class AnalysisHealthPlanFragment extends BaseFragment implements View.OnC
                 lyFamily.setVisibility(View.VISIBLE);
 
             }
-        }else  if (buttonView.getId() == R.id.rbIndividual) {
+        } else if (buttonView.getId() == R.id.rbIndividual) {
 
             if (isChecked) {
                 lyFamily.setVisibility(View.GONE);

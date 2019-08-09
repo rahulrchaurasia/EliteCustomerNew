@@ -24,12 +24,13 @@
             android:layout_marginBottom="5dp">
 
             <TextView
+                android:id="@+id/txtTitle"
                 style="@style/TextViewStyle.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="Reliance Customer"
+                android:text=""
                 android:textColor="@color/black"
 
                 android:textSize="18sp" />
@@ -41,13 +42,14 @@
                 android:background="@color/bg"></View>
 
             <TextView
+                android:id="@+id/txtMessage"
                 style="@style/TextViewStyle.MediumBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
                 android:textColor="@color/header_dark_text"
-                android:text="Please Enter Your Vehicle Registration Number Or Reliance Policy Number"
+                android:text="Please Enter Your Vehicle Registration Number Or Policy Number"
               />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -91,6 +93,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="OR"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
@@ -98,6 +101,7 @@
         style="@style/CardStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_margin="5dp">
 
         <LinearLayout
@@ -106,8 +110,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="left"
-            android:padding="10dp"
-           >
+            android:padding="10dp">
 
             <TextView
                 style="@style/TextViewStyle.Large"

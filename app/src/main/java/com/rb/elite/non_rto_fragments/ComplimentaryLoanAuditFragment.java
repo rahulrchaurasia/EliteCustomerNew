@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,9 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
 import com.rb.elite.BaseFragment;
@@ -50,15 +52,15 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     private Context mContext;
-    EditText etDOB,etNameOfApplicant,etloaneligibility,etExistingEMI,etRequiredLoanAmount;
+    EditText etDOB, etNameOfApplicant, etloaneligibility, etExistingEMI, etRequiredLoanAmount;
     RadioGroup rgloantype;
     RadioButton rbimgsl, rbimgse, rbimgpro;
-
+    CardView cvClient;
     // region Common Declaration
     PrefManager prefManager;
     UserConstatntEntity userConstatntEntity;
 
-    EditText etPincode,  etCity  ;
+    EditText etPincode, etCity;
     DataBaseController dataBaseController;
     UserEntity loginEntity;
     Button btnBooked;
@@ -66,7 +68,7 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
     RTOServiceEntity serviceEntity;
 
     ScrollView scrollView;
-    LinearLayout  lvLogo, lyTAT;
+    LinearLayout lvLogo, lyTAT;
     RelativeLayout rlDoc;
     ImageView ivLogo, ivClientLogo;
 
@@ -94,22 +96,23 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
     private void initialize(View view) {
         prefManager = new PrefManager(getActivity());
 
-        scrollView =  view.findViewById(R.id.scrollView);
-        btnBooked =  view.findViewById(R.id.btnBooked);
+        scrollView = view.findViewById(R.id.scrollView);
+        btnBooked = view.findViewById(R.id.btnBooked);
         etCity = (EditText) view.findViewById(R.id.etCity);
-        etPincode =  (EditText) view.findViewById(R.id.etPincode);
+        etPincode = (EditText) view.findViewById(R.id.etPincode);
+        cvClient = (CardView) view.findViewById(R.id.cvClient);
 
-        etNameOfApplicant =  view.findViewById(R.id.etNameOfApplicant);
-        etloaneligibility =  view.findViewById(R.id.etloaneligibility);
-        etExistingEMI =  view.findViewById(R.id.etExistingEMI);
-        etRequiredLoanAmount =  view.findViewById(R.id.etRequiredLoanAmount);
+        etNameOfApplicant = view.findViewById(R.id.etNameOfApplicant);
+        etloaneligibility = view.findViewById(R.id.etloaneligibility);
+        etExistingEMI = view.findViewById(R.id.etExistingEMI);
+        etRequiredLoanAmount = view.findViewById(R.id.etRequiredLoanAmount);
         etDOB = view.findViewById(R.id.etDOB);
 
-        txtCharges =  view.findViewById(R.id.txtCharges);
-        txtPrdName =  view.findViewById(R.id.txtPrdName);
-        txtDoc =  view.findViewById(R.id.txtDoc);
-        txtClientName =  view.findViewById(R.id.txtClientName);
-        txtTAT =  view.findViewById(R.id.txtTAT);
+        txtCharges = view.findViewById(R.id.txtCharges);
+        txtPrdName = view.findViewById(R.id.txtPrdName);
+        txtDoc = view.findViewById(R.id.txtDoc);
+        txtClientName = view.findViewById(R.id.txtClientName);
+        txtTAT = view.findViewById(R.id.txtTAT);
 
         rlDoc = (RelativeLayout) view.findViewById(R.id.rlDoc);
 
@@ -118,8 +121,8 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
         rbimgse = (RadioButton) view.findViewById(R.id.rbimgse);
         rbimgpro = (RadioButton) view.findViewById(R.id.rbimgpro);
 
-        lvLogo =  view.findViewById(R.id.lvLogo);
-        lyTAT =  view.findViewById(R.id.lyTAT);
+        lvLogo = view.findViewById(R.id.lvLogo);
+        lyTAT = view.findViewById(R.id.lyTAT);
 
         ivLogo = (ImageView) view.findViewById(R.id.ivLogo);
         ivClientLogo = (ImageView) view.findViewById(R.id.ivClientLogo);
@@ -138,12 +141,24 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
-      //  etVehicle.setText(userConstatntEntity.getVehicleno());
+        if (userConstatntEntity.getCompanyId() != null) {
+
+            if ((!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals(""))) {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            } else {
+
+                cvClient.setVisibility(View.GONE);
+            }
+        }else {
+            cvClient.setVisibility(View.GONE);
+        }
+
 
     }
 
@@ -218,6 +233,7 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
         }
         return true;
     }
+
     private void setScrollatBottom() {
         scrollView.postDelayed(new Runnable() {
             @Override
@@ -263,10 +279,9 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
             requestEntity.setSalaried("Professional");
         }
         requestEntity.setEMI_Amount(etExistingEMI.getText().toString());
-        if(etExistingEMI.getText().toString().equals("")) {
+        if (etExistingEMI.getText().toString().equals("")) {
             requestEntity.setAny_EMI("N");
-        }else
-        {
+        } else {
             requestEntity.setAny_EMI("Y");
         }
 
@@ -278,7 +293,7 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
     @Override
     public void onClick(View view) {
 
-        Constants.hideKeyBoard(view,mContext);
+        Constants.hideKeyBoard(view, mContext);
         switch (view.getId()) {
             case R.id.etDOB:
                 DateTimePicker.showOpenDatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
@@ -316,6 +331,7 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
         }
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -323,7 +339,7 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
             if (data != null) {
 
                 CityMainEntity cityMainEntity = data.getParcelableExtra(Constants.SEARCH_CITY_DATA);
-                CITY_ID =  String.valueOf(cityMainEntity.getCity_id());
+                CITY_ID = String.valueOf(cityMainEntity.getCity_id());
                 etCity.setText(cityMainEntity.getCityname());
                 etCity.setError(null);
 
@@ -331,7 +347,7 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
 
                 //region call Price Controller
                 ProductPriceRequestEntity entity = new ProductPriceRequestEntity();
-              //  entity.setVehicleno(etVehicle.getText().toString());
+                //  entity.setVehicleno(etVehicle.getText().toString());
                 entity.setCityid(CITY_ID);
                 entity.setProduct_id(String.valueOf(PRODUCT_ID));
                 entity.setProductcode(PRODUCT_CODE);
@@ -359,8 +375,7 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
                 getTatData();
 
             }
-        }
-        else if (response instanceof ProvideClaimAssResponse) {
+        } else if (response instanceof ProvideClaimAssResponse) {
             if (response.getStatus_code() == 0) {
 
                 showMiscPaymentAlert(btnBooked, response.getMessage().toString(), ((ProvideClaimAssResponse) response).getData().get(0));
@@ -372,6 +387,6 @@ public class ComplimentaryLoanAuditFragment extends BaseFragment implements View
     @Override
     public void OnFailure(Throwable t) {
         cancelDialog();
-        Toast.makeText(getActivity(),t.getMessage(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

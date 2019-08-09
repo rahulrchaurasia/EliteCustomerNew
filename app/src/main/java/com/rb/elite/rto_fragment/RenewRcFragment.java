@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -88,7 +89,7 @@ public class RenewRcFragment extends BaseFragment implements View.OnClickListene
     ScrollView scrollView;
 
     RTOServiceEntity serviceEntity;
-
+    CardView cvClient;
 
     LinearLayout lyVehicle, lvLogo, llDocumentUpload, lyRTO, lyTAT;
     RelativeLayout rlDoc, rlEditMakeModel;
@@ -231,6 +232,7 @@ public class RenewRcFragment extends BaseFragment implements View.OnClickListene
         llDocumentUpload = (LinearLayout) view.findViewById(R.id.llDocumentUpload);
         lyRTO = (LinearLayout) view.findViewById(R.id.lyRTO);
         lyTAT = (LinearLayout) view.findViewById(R.id.lyTAT);
+        cvClient = (CardView) view.findViewById(R.id.cvClient);
 
         lyMakeModel = (LinearLayout) view.findViewById(R.id.lyMakeModel);
 
@@ -420,22 +422,33 @@ public class RenewRcFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
+        if (userConstatntEntity.getCompanyId() != null) {
+
+            if ((!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals(""))) {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            } else {
+
+                cvClient.setVisibility(View.GONE);
+            }
+        }else {
+            cvClient.setVisibility(View.GONE);
+        }
 
 
-        if(userConstatntEntity.getVehicleno().length() >0)
-        {
+        if (userConstatntEntity.getVehicleno().length() > 0) {
             etVehicle.setText(userConstatntEntity.getVehicleno());
             etVehicle.setEnabled(false);
             rlEditMakeModel.setVisibility(View.VISIBLE);
             lyVehicle.setBackgroundColor(getResources().getColor(R.color.bg_edit));
             btnGo.setVisibility(View.GONE);
 
-        }else{
+        } else {
             rlEditMakeModel.setVisibility(View.GONE);
             etVehicle.setText("");
             etVehicle.setEnabled(true);

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
@@ -65,6 +66,7 @@ public class PUCFragment extends BaseFragment implements View.OnClickListener, I
     DataBaseController dataBaseController;
     UserEntity loginEntity;
     Button btnBooked;
+    CardView cvClient;
 
     RTOServiceEntity serviceEntity;
 
@@ -106,7 +108,7 @@ public class PUCFragment extends BaseFragment implements View.OnClickListener, I
         etCity = (EditText) view.findViewById(R.id.etCity);
         etPincode = (EditText) view.findViewById(R.id.etPincode);
         etVehicle = (EditText) view.findViewById(R.id.etVehicle);
-
+        cvClient  = (CardView) view.findViewById(R.id.cvClient);
 
         txtCharges = (TextView) view.findViewById(R.id.txtCharges);
         txtPrdName = (TextView) view.findViewById(R.id.txtPrdName);
@@ -151,11 +153,25 @@ public class PUCFragment extends BaseFragment implements View.OnClickListener, I
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
+        if(userConstatntEntity.getCompanyId() != null){
+
+            if( (!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals("")) )
+            {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            }else{
+
+                cvClient.setVisibility(View.GONE);
+            }
+        }else{
+            cvClient.setVisibility(View.GONE);
+        }
+
         if(userConstatntEntity.getVehicleno().length() >0)
         {
             etVehicle.setText(userConstatntEntity.getVehicleno());

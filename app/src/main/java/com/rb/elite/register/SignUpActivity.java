@@ -8,8 +8,6 @@ import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -23,13 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.rb.elite.BaseActivity;
 import com.rb.elite.R;
 import com.rb.elite.core.APIResponse;
 import com.rb.elite.core.IResponseSubcriber;
 import com.rb.elite.core.controller.register.RegisterController;
-import com.rb.elite.core.model.MakeEntity;
-import com.rb.elite.core.model.ModelEntity;
 import com.rb.elite.core.model.PincodeEntity;
 import com.rb.elite.core.model.PolicyEntity;
 import com.rb.elite.core.model.VerifyOTPEntity;
@@ -61,12 +60,10 @@ public class SignUpActivity extends BaseActivity implements IResponseSubcriber, 
     PincodeEntity pincodeEntity;
     UpdateUserRequestEntity updateUserRequestEntity;
     String OTP = "0000";
-    LinearLayout llOtherInfo, llCityInfo;
+    LinearLayout llOtherInfo, llCityInfo, lyMake, lyModel, lyVehicle;
     PolicyEntity policyEntity;
     DataBaseController dataBaseController;
     PrefManager prefManager;
-
-
 
 
     //region Location
@@ -96,23 +93,35 @@ public class SignUpActivity extends BaseActivity implements IResponseSubcriber, 
         mLocationTracker.init();
 
 
-
         if (getIntent().hasExtra("POLICY_DATA")) {
 
             policyEntity = getIntent().getExtras().getParcelable("POLICY_DATA");
             bindDetails();
+        } else {
+            lyMake.setVisibility(View.GONE);
+            lyModel.setVisibility(View.GONE);
+            lyVehicle.setVisibility(View.GONE);
         }
-
-
-
 
 
     }
 
 
     private void bindDetails() {
-        etFullName.setText(policyEntity.getInsuredName());
 
+        lyMake.setVisibility(View.VISIBLE);
+        lyModel.setVisibility(View.VISIBLE);
+        lyVehicle.setVisibility(View.VISIBLE);
+
+        etVehicle.setEnabled(false);
+        acMake.setEnabled(false);
+        acModel.setEnabled(false);
+
+        etFullName.setText(policyEntity.getInsuredName());
+        etVehicle.setText(policyEntity.getVehicleNumber());
+
+        acMake.setText(policyEntity.getMake());
+        acModel.setText(policyEntity.getModel());
 
     }
 
@@ -165,12 +174,16 @@ public class SignUpActivity extends BaseActivity implements IResponseSubcriber, 
     private void setListener() {
         btnSubmit.setOnClickListener(this);
 
-       //  etPincode.addTextChangedListener(pincodeTextWatcher);
+        //  etPincode.addTextChangedListener(pincodeTextWatcher);
     }
 
     private void init_widets() {
         llOtherInfo = (LinearLayout) findViewById(R.id.llOtherInfo);
         llCityInfo = (LinearLayout) findViewById(R.id.llCityInfo);
+
+        lyMake = (LinearLayout) findViewById(R.id.lyMake);
+        lyModel = (LinearLayout) findViewById(R.id.lyModel);
+        lyVehicle = (LinearLayout) findViewById(R.id.lyVehicle);
 
 
         etFullName = (EditText) findViewById(R.id.etFullName);
@@ -361,26 +374,22 @@ public class SignUpActivity extends BaseActivity implements IResponseSubcriber, 
         registerRequest.setEmailid("" + etEmail.getText());
         registerRequest.setMobile("" + etMobile.getText());
         registerRequest.setPassword("" + etPassword.getText());
+        registerRequest.setCompany_id("" + prefManager.getCompanyID());
 
-        if(mLocation != null){
-            registerRequest.setLat("" +  mLocation.getLatitude());
-            registerRequest.setLon("" +  mLocation.getLongitude());
-        }else{
-            registerRequest.setLat("0" );
+        if (mLocation != null) {
+            registerRequest.setLat("" + mLocation.getLatitude());
+            registerRequest.setLon("" + mLocation.getLongitude());
+        } else {
+            registerRequest.setLat("0");
             registerRequest.setLon("0");
         }
 
 
-        registerRequest.setPincode("" );
-        registerRequest.setState("" );
-        registerRequest.setArea("" );
+        registerRequest.setPincode("");
+        registerRequest.setState("");
+        registerRequest.setArea("");
         registerRequest.setCity("");
 
-        registerRequest.setVehicle_no("" );
-        registerRequest.setPolicy_no("" );
-
-        registerRequest.setMake("" );
-        registerRequest.setModel("");
 
         if (policyEntity != null) {
             registerRequest.setProductCode("" + policyEntity.getProductCode());
@@ -390,6 +399,12 @@ public class SignUpActivity extends BaseActivity implements IResponseSubcriber, 
 
             registerRequest.setPolicyStatus("" + policyEntity.getPolicyStatus());
             registerRequest.setResponseStatus("" + policyEntity.getResponseStatus());
+
+            registerRequest.setMake("" + policyEntity.getMake());
+            registerRequest.setModel("" + policyEntity.getModel());
+            registerRequest.setVehicle_no("" + policyEntity.getVehicleNumber());
+            registerRequest.setPolicy_no("" + policyEntity.getPolicyNumber());
+
         } else {
             registerRequest.setProductCode("");
             registerRequest.setRiskEndDate("");
@@ -398,6 +413,12 @@ public class SignUpActivity extends BaseActivity implements IResponseSubcriber, 
 
             registerRequest.setPolicyStatus("");
             registerRequest.setResponseStatus("");
+
+            registerRequest.setVehicle_no("");
+            registerRequest.setPolicy_no("");
+
+            registerRequest.setMake("");
+            registerRequest.setModel("");
         }
 
 
@@ -521,16 +542,14 @@ public class SignUpActivity extends BaseActivity implements IResponseSubcriber, 
     public void onConnected() {
         mLocation = mLocationTracker.mLocation;
 
-      //  Log.d("--location--", "onConnected: " + mLocation.getLatitude() +" " + mLocation.getLongitude());
+        //  Log.d("--location--", "onConnected: " + mLocation.getLatitude() +" " + mLocation.getLongitude());
     }
 
     @Override
     public void onConnectionFailed() {
-        mLocation =null;
+        mLocation = null;
     }
     //endregion
-
-
 
 
 }

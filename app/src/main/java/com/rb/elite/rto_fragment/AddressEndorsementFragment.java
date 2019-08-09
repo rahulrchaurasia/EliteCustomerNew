@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
@@ -67,6 +68,7 @@ public class AddressEndorsementFragment  extends BaseFragment implements View.On
     ImageView ivLogo, ivClientLogo;
 
     TextView txtCharges, txtPrdName, txtDoc, txtClientName, txtTAT;
+    CardView cvClient;
 
     String PRODUCT_NAME = "";
     String PRODUCT_CODE = "";
@@ -170,6 +172,8 @@ public class AddressEndorsementFragment  extends BaseFragment implements View.On
         ivLogo = (ImageView) view.findViewById(R.id.ivLogo);
         ivClientLogo = (ImageView) view.findViewById(R.id.ivClientLogo);
 
+        cvClient  = (CardView) view.findViewById(R.id.cvClient);
+
         etVehicle.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(20)});
 
 
@@ -191,11 +195,28 @@ public class AddressEndorsementFragment  extends BaseFragment implements View.On
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
+
+        if(userConstatntEntity.getCompanyId() != null){
+
+            if( (!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals("")) )
+            {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            }else{
+
+                cvClient.setVisibility(View.GONE);
+            }
+        }else {
+            cvClient.setVisibility(View.GONE);
+        }
+
+
+
         if(userConstatntEntity.getVehicleno().length() >0)
         {
             etVehicle.setText(userConstatntEntity.getVehicleno());

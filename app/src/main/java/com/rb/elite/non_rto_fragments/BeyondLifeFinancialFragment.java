@@ -5,8 +5,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +17,10 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.rb.elite.BaseFragment;
@@ -58,16 +60,17 @@ public class BeyondLifeFinancialFragment extends BaseFragment implements View.On
     PrefManager prefManager;
     UserConstatntEntity userConstatntEntity;
 
-    EditText etPincode,  etCity ,   etNomineeName , etRelationNominee ,  etNameOfProposer ,etDOB   ;
+    EditText etPincode, etCity, etNomineeName, etRelationNominee, etNameOfProposer, etDOB;
     DataBaseController dataBaseController;
     UserEntity loginEntity;
     Button btnBooked;
+    CardView cvClient;
 
     RTOServiceEntity serviceEntity;
 
     ScrollView scrollView;
     LinearLayout lvLogo, lyTAT;
-    RelativeLayout rlDoc ;
+    RelativeLayout rlDoc;
     ImageView ivLogo, ivClientLogo;
 
     TextView txtCharges, txtPrdName, txtDoc, txtClientName, txtTAT;
@@ -137,41 +140,35 @@ public class BeyondLifeFinancialFragment extends BaseFragment implements View.On
     private void initialize(View view) {
 
 
-
+        cvClient = (CardView) view.findViewById(R.id.cvClient);
         scrollView = view.findViewById(R.id.scrollView);
-        btnBooked =  view.findViewById(R.id.btnBooked);
-        etCity =  view.findViewById(R.id.etCity);
-        etPincode =   view.findViewById(R.id.etPincode);
+        btnBooked = view.findViewById(R.id.btnBooked);
+        etCity = view.findViewById(R.id.etCity);
+        etPincode = view.findViewById(R.id.etPincode);
 
-        etDOB =  view.findViewById(R.id.etDOB);
-        etNomineeName =   view.findViewById(R.id.etNomineeName);
-        etRelationNominee =   view.findViewById(R.id.etRelationNominee);
-        etNameOfProposer =   view.findViewById(R.id.etNameOfProposer);
+        etDOB = view.findViewById(R.id.etDOB);
+        etNomineeName = view.findViewById(R.id.etNomineeName);
+        etRelationNominee = view.findViewById(R.id.etRelationNominee);
+        etNameOfProposer = view.findViewById(R.id.etNameOfProposer);
 
 
-
-        txtCharges =  view.findViewById(R.id.txtCharges);
-        txtPrdName =  view.findViewById(R.id.txtPrdName);
-        txtDoc =  view.findViewById(R.id.txtDoc);
-        txtClientName =  view.findViewById(R.id.txtClientName);
+        txtCharges = view.findViewById(R.id.txtCharges);
+        txtPrdName = view.findViewById(R.id.txtPrdName);
+        txtDoc = view.findViewById(R.id.txtDoc);
+        txtClientName = view.findViewById(R.id.txtClientName);
         txtTAT = view.findViewById(R.id.txtTAT);
 
-        rlDoc =  view.findViewById(R.id.rlDoc);
+        rlDoc = view.findViewById(R.id.rlDoc);
 
 
+        lvLogo = view.findViewById(R.id.lvLogo);
 
-        lvLogo =  view.findViewById(R.id.lvLogo);
 
-
-        lyTAT =  view.findViewById(R.id.lyTAT);
+        lyTAT = view.findViewById(R.id.lyTAT);
 
 
         ivLogo = view.findViewById(R.id.ivLogo);
-        ivClientLogo =  view.findViewById(R.id.ivClientLogo);
-
-
-
-
+        ivClientLogo = view.findViewById(R.id.ivClientLogo);
 
 
     }
@@ -189,16 +186,27 @@ public class BeyondLifeFinancialFragment extends BaseFragment implements View.On
         etCity.setOnClickListener(this);
 
 
-
-
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
+
+        if (userConstatntEntity.getCompanyId() != null) {
+
+            if ((!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals(""))) {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            } else {
+
+                cvClient.setVisibility(View.GONE);
+            }
+        }else {
+            cvClient.setVisibility(View.GONE);
+        }
 
 
     }
@@ -208,30 +216,25 @@ public class BeyondLifeFinancialFragment extends BaseFragment implements View.On
         if (!validateProposerName(etNameOfProposer)) {
 
             return false;
-        }
-        else if (!validateNominee(etNomineeName)) {
+        } else if (!validateNominee(etNomineeName)) {
 
             return false;
-        }
-        else if (!validateNomineeRel(etRelationNominee)) {
+        } else if (!validateNomineeRel(etRelationNominee)) {
 
             return false;
-        }
-
-        else if (!isEmpty(etDOB)) {
+        } else if (!isEmpty(etDOB)) {
             etDOB.requestFocus();
             etDOB.setError("Enter DOB");
             return false;
-        }
-        else if (!validateCity(etCity)) {
+        } else if (!validateCity(etCity)) {
 
             return false;
-        }
-        else if (!validatePinCode(etPincode)) {
+        } else if (!validatePinCode(etPincode)) {
             return false;
         }
         return true;
     }
+
     private void setScrollatBottom() {
         scrollView.postDelayed(new Runnable() {
             @Override
@@ -281,7 +284,7 @@ public class BeyondLifeFinancialFragment extends BaseFragment implements View.On
     @Override
     public void onClick(View view) {
 
-        Constants.hideKeyBoard(view,mContext);
+        Constants.hideKeyBoard(view, mContext);
         switch (view.getId()) {
 
             case R.id.etDOB:
@@ -305,7 +308,6 @@ public class BeyondLifeFinancialFragment extends BaseFragment implements View.On
 
                 ((ProductMainActivity) getActivity()).getProducDoc(PRODUCT_ID);
                 break;
-
 
 
             case R.id.btnBooked:
@@ -337,7 +339,7 @@ public class BeyondLifeFinancialFragment extends BaseFragment implements View.On
             if (data != null) {
 
                 CityMainEntity cityMainEntity = data.getParcelableExtra(Constants.SEARCH_CITY_DATA);
-                CITY_ID =  String.valueOf(cityMainEntity.getCity_id());
+                CITY_ID = String.valueOf(cityMainEntity.getCity_id());
                 etCity.setText(cityMainEntity.getCityname());
                 etCity.setError(null);
 
@@ -373,8 +375,7 @@ public class BeyondLifeFinancialFragment extends BaseFragment implements View.On
                 getTatData();
 
             }
-        }
-        else if (response instanceof ProvideClaimAssResponse) {
+        } else if (response instanceof ProvideClaimAssResponse) {
             if (response.getStatus_code() == 0) {
 
                 showMiscPaymentAlert(btnBooked, response.getMessage().toString(), ((ProvideClaimAssResponse) response).getData().get(0));
@@ -388,6 +389,6 @@ public class BeyondLifeFinancialFragment extends BaseFragment implements View.On
     @Override
     public void OnFailure(Throwable t) {
         cancelDialog();
-        Toast.makeText(getActivity(),t.getMessage(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

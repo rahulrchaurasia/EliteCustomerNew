@@ -1,6 +1,6 @@
 package com.rb.elite.core.model;
 
-public  class UserConstatntEntity {
+public class UserConstatntEntity {
 
 
     /**
@@ -20,10 +20,18 @@ public  class UserConstatntEntity {
     private String contactno;
     private String emailid;
 
-    private String  dbversion;
+    private String dbversion;
 
     private String VersionCode;
-    private String IsForceUpdate ;
+    private String IsForceUpdate;
+
+
+
+    private String companyId;
+
+
+
+
 
     public String getVersionCode() {
         return VersionCode;
@@ -42,13 +50,10 @@ public  class UserConstatntEntity {
     }
 
 
-
-
     /**
      * vehicleno : KA04ML6747
      * homepopup : http://elite.rupeeboss.com/images/upload/168reli.png
      */
-
 
 
     public String getMake() {
@@ -121,5 +126,13 @@ public  class UserConstatntEntity {
 
     public void setDbversion(String dbversion) {
         this.dbversion = dbversion;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 }

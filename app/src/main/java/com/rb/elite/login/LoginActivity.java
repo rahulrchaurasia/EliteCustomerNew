@@ -5,16 +5,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.rb.elite.BaseActivity;
 import com.rb.elite.HomeActivity;
 import com.rb.elite.R;
@@ -101,14 +102,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         tvForgotPassword.setOnClickListener(this);
     }
 
+    // based On CompanyWise
+    private void registrationDecision() {
+
+//        if (prefManager.getCompanyID().trim().length() > 0) {
+//
+//            startActivity(new Intent(LoginActivity.this, ClientDeclareActivity.class));
+//        } else {
+//            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+//        }
+
+        startActivity(new Intent(LoginActivity.this, ClientDeclareActivity.class));
+    }
+
     @Override
     public void onClick(View view) {
         Constants.hideKeyBoard(view, LoginActivity.this);
         switch (view.getId()) {
             case R.id.tvRegistration:
-               // startActivity(new Intent(LoginActivity.this, ClientDeclareActivity.class));
+                //
                 // Changes For common app 05
-                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+                registrationDecision();
 
                 break;
 

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -74,7 +75,7 @@ public class TransferNCBFragment extends BaseFragment implements View.OnClickLis
     DataBaseController dataBaseController;
     UserEntity loginEntity;
     Button btnBooked, btnGo;
-
+    CardView cvClient;
 
     RTOServiceEntity serviceEntity;
 
@@ -191,6 +192,7 @@ public class TransferNCBFragment extends BaseFragment implements View.OnClickLis
         etPincode = view.findViewById(R.id.etPincode);
         etVehicle = view.findViewById(R.id.etVehicle);
         etRTO = view.findViewById(R.id.etRTO);
+        cvClient  = (CardView) view.findViewById(R.id.cvClient);
 
         etInsCompanyName = view.findViewById(R.id.etInsCompanyName);
 
@@ -226,7 +228,6 @@ public class TransferNCBFragment extends BaseFragment implements View.OnClickLis
                 acMake.dismissDropDown();
             }
         });
-
 
         if (userConstatntEntity.getMake() != "") {
             IsMakeValid = true;
@@ -303,15 +304,23 @@ public class TransferNCBFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
+        if(userConstatntEntity.getCompanyId() != null){
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
-        etVehicle.setText(userConstatntEntity.getVehicleno());
-        acMake.setText("" + userConstatntEntity.getMake());
-        IsMakeValid = true;
+            if( (!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals("")) )
+            {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
 
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            }else{
+
+                cvClient.setVisibility(View.GONE);
+            }
+        } else {
+            cvClient.setVisibility(View.GONE);
+        }
 
         if (userConstatntEntity.getVehicleno().length() > 0) {
             etVehicle.setText(userConstatntEntity.getVehicleno());

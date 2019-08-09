@@ -6,11 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,14 +21,20 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.rb.elite.BaseFragment;
 import com.rb.elite.R;
 import com.rb.elite.core.APIResponse;
 import com.rb.elite.core.IResponseSubcriber;
 import com.rb.elite.core.controller.misc_non_rto.MiscNonRTOController;
 import com.rb.elite.core.model.CityMainEntity;
-
 import com.rb.elite.core.model.InsuranceCompanyEntity;
 import com.rb.elite.core.model.ProductPriceEntity;
 import com.rb.elite.core.model.RTOServiceEntity;
@@ -79,7 +80,7 @@ public class ProvideVehicleDamageFragment extends BaseFragment implements View.O
     DataBaseController dataBaseController;
     UserEntity loginEntity;
     Button btnBooked;
-
+    CardView cvClient;
     RTOServiceEntity serviceEntity;
 
     ScrollView scrollView;
@@ -177,31 +178,31 @@ public class ProvideVehicleDamageFragment extends BaseFragment implements View.O
 
         prefManager = new PrefManager(getActivity());
 
-        scrollView =  view.findViewById(R.id.scrollView);
-        btnBooked =  view.findViewById(R.id.btnBooked);
-        etCity =  view.findViewById(R.id.etCity);
-        etPincode =  view.findViewById(R.id.etPincode);
-        etVehicle =  view.findViewById(R.id.etVehicle);
+        scrollView = view.findViewById(R.id.scrollView);
+        btnBooked = view.findViewById(R.id.btnBooked);
+        etCity = view.findViewById(R.id.etCity);
+        etPincode = view.findViewById(R.id.etPincode);
+        etVehicle = view.findViewById(R.id.etVehicle);
+        cvClient = (CardView) view.findViewById(R.id.cvClient);
+
+        txtCharges = view.findViewById(R.id.txtCharges);
+        txtPrdName = view.findViewById(R.id.txtPrdName);
+        txtDoc = view.findViewById(R.id.txtDoc);
+        txtClientName = view.findViewById(R.id.txtClientName);
+        txtTAT = view.findViewById(R.id.txtTAT);
+
+        rlDoc = view.findViewById(R.id.rlDoc);
+        rlEditVehicle = view.findViewById(R.id.rlEditVehicle);
+
+        lyVehicle = view.findViewById(R.id.lyVehicle);
+        lvLogo = view.findViewById(R.id.lvLogo);
 
 
-        txtCharges =  view.findViewById(R.id.txtCharges);
-        txtPrdName =  view.findViewById(R.id.txtPrdName);
-        txtDoc =  view.findViewById(R.id.txtDoc);
-        txtClientName =  view.findViewById(R.id.txtClientName);
-        txtTAT =  view.findViewById(R.id.txtTAT);
-
-        rlDoc =  view.findViewById(R.id.rlDoc);
-        rlEditVehicle =  view.findViewById(R.id.rlEditVehicle);
-
-        lyVehicle =  view.findViewById(R.id.lyVehicle);
-        lvLogo =  view.findViewById(R.id.lvLogo);
+        lyTAT = view.findViewById(R.id.lyTAT);
 
 
-        lyTAT =  view.findViewById(R.id.lyTAT);
-
-
-        ivLogo =  view.findViewById(R.id.ivLogo);
-        ivClientLogo =  view.findViewById(R.id.ivClientLogo);
+        ivLogo = view.findViewById(R.id.ivLogo);
+        ivClientLogo = view.findViewById(R.id.ivClientLogo);
 
         etDate = view.findViewById(R.id.etDate);
         etTime = view.findViewById(R.id.etTime);
@@ -233,20 +234,33 @@ public class ProvideVehicleDamageFragment extends BaseFragment implements View.O
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
-        if(userConstatntEntity.getVehicleno().length() >0)
-        {
+        if (userConstatntEntity.getCompanyId() != null) {
+
+            if ((!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals(""))) {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            } else {
+
+                cvClient.setVisibility(View.GONE);
+            }
+        } else {
+            cvClient.setVisibility(View.GONE);
+        }
+
+
+        if (userConstatntEntity.getVehicleno().length() > 0) {
             etVehicle.setText(userConstatntEntity.getVehicleno());
             etVehicle.setEnabled(false);
             rlEditVehicle.setVisibility(View.VISIBLE);
             lyVehicle.setBackgroundColor(getResources().getColor(R.color.bg_edit));
 
 
-        }else{
+        } else {
             lyVehicle.setBackgroundColor(getResources().getColor(R.color.bg_dashboard));
             rlEditVehicle.setVisibility(View.GONE);
             etVehicle.setEnabled(true);
@@ -353,6 +367,7 @@ public class ProvideVehicleDamageFragment extends BaseFragment implements View.O
             lvLogo.setVisibility(View.GONE);
         }
     }
+
     private void setScrollatBottom() {
         scrollView.postDelayed(new Runnable() {
             @Override
@@ -387,7 +402,7 @@ public class ProvideVehicleDamageFragment extends BaseFragment implements View.O
     @Override
     public void onClick(View view) {
 
-        Constants.hideKeyBoard(view,mContext);
+        Constants.hideKeyBoard(view, mContext);
         switch (view.getId()) {
 
 
@@ -452,9 +467,9 @@ public class ProvideVehicleDamageFragment extends BaseFragment implements View.O
 
             case R.id.etInsCompanyName:
                 if (insuranceCompanyEntityList != null && insuranceCompanyEntityList.size() > 0) {
-                        etInsCompanyName.setError(null);
-                        getBottomSheetDialog();
-                    }
+                    etInsCompanyName.setError(null);
+                    getBottomSheetDialog();
+                }
 
 
                 break;

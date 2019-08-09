@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,7 @@ public class LICChangeAssistanceFragment extends BaseFragment implements View.On
     DataBaseController dataBaseController;
     UserEntity loginEntity;
     Button btnBooked;
+    CardView cvClient;
 
     RTOServiceEntity serviceEntity;
 
@@ -145,7 +147,7 @@ public class LICChangeAssistanceFragment extends BaseFragment implements View.On
         etNomineeName =   view.findViewById(R.id.etNomineeName);
         etRelationNominee =   view.findViewById(R.id.etRelationNominee);
         etInsCompanyName =   view.findViewById(R.id.etInsCompanyName);
-
+        cvClient  = (CardView) view.findViewById(R.id.cvClient);
 
 
         txtCharges =  view.findViewById(R.id.txtCharges);
@@ -155,24 +157,13 @@ public class LICChangeAssistanceFragment extends BaseFragment implements View.On
         txtTAT = view.findViewById(R.id.txtTAT);
 
         rlDoc =  view.findViewById(R.id.rlDoc);
-
-
-
         lvLogo =  view.findViewById(R.id.lvLogo);
-
-
         lyTAT =  view.findViewById(R.id.lyTAT);
-
-
         ivLogo = view.findViewById(R.id.ivLogo);
         ivClientLogo =  view.findViewById(R.id.ivClientLogo);
 
 
-
-
-
-
-    }
+   }
 
     private void setOnClickListener() {
 
@@ -191,11 +182,25 @@ public class LICChangeAssistanceFragment extends BaseFragment implements View.On
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
+        if(userConstatntEntity.getCompanyId() != null){
+
+            if( (!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals("")) )
+            {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            }else{
+
+                cvClient.setVisibility(View.GONE);
+            }
+        }else {
+            cvClient.setVisibility(View.GONE);
+        }
+
 
 
     }

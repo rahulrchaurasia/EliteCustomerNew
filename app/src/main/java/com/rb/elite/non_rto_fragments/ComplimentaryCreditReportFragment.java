@@ -5,8 +5,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +17,10 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.rb.elite.BaseFragment;
@@ -63,7 +65,7 @@ public class ComplimentaryCreditReportFragment extends BaseFragment implements V
     DataBaseController dataBaseController;
     UserEntity loginEntity;
     Button btnBooked;
-
+    CardView cvClient;
     RTOServiceEntity serviceEntity;
 
     ScrollView scrollView;
@@ -141,7 +143,7 @@ public class ComplimentaryCreditReportFragment extends BaseFragment implements V
     private void initialize(View view) {
 
 
-
+        cvClient = (CardView) view.findViewById(R.id.cvClient);
         scrollView = view.findViewById(R.id.scrollView);
         btnBooked = view.findViewById(R.id.btnBooked);
         etCity = view.findViewById(R.id.etCity);
@@ -189,11 +191,22 @@ public class ComplimentaryCreditReportFragment extends BaseFragment implements V
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
+        if (userConstatntEntity.getCompanyId() != null) {
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
+            if ((!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals(""))) {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            } else {
+
+                cvClient.setVisibility(View.GONE);
+            }
+        }else {
+            cvClient.setVisibility(View.GONE);
+        }
 
 
     }
@@ -207,13 +220,12 @@ public class ComplimentaryCreditReportFragment extends BaseFragment implements V
             etPan.requestFocus();
             etPan.setError("Enter Pan Number");
             return false;
-        }  if (!isValidPan(etPan)) {
+        }
+        if (!isValidPan(etPan)) {
             etPan.requestFocus();
             etPan.setError("Invalid Pan Number");
             return false;
-        }
-
-        else if (!isEmpty(etDOB)) {
+        } else if (!isEmpty(etDOB)) {
             etDOB.requestFocus();
             etDOB.setError("Enter DOB");
             return false;
@@ -236,6 +248,7 @@ public class ComplimentaryCreditReportFragment extends BaseFragment implements V
             lvLogo.setVisibility(View.GONE);
         }
     }
+
     private void setScrollatBottom() {
         scrollView.postDelayed(new Runnable() {
             @Override
@@ -269,11 +282,10 @@ public class ComplimentaryCreditReportFragment extends BaseFragment implements V
     }
 
 
-
     @Override
     public void onClick(View view) {
 
-        Constants.hideKeyBoard(view,mContext);
+        Constants.hideKeyBoard(view, mContext);
         switch (view.getId()) {
 
 
@@ -297,7 +309,6 @@ public class ComplimentaryCreditReportFragment extends BaseFragment implements V
 
                 ((ProductMainActivity) getActivity()).getProducDoc(PRODUCT_ID);
                 break;
-
 
 
             case R.id.btnBooked:
@@ -328,7 +339,7 @@ public class ComplimentaryCreditReportFragment extends BaseFragment implements V
             if (data != null) {
 
                 CityMainEntity cityMainEntity = data.getParcelableExtra(Constants.SEARCH_CITY_DATA);
-                CITY_ID =  String.valueOf(cityMainEntity.getCity_id());
+                CITY_ID = String.valueOf(cityMainEntity.getCity_id());
                 etCity.setText(cityMainEntity.getCityname());
                 etCity.setError(null);
 
@@ -364,8 +375,7 @@ public class ComplimentaryCreditReportFragment extends BaseFragment implements V
                 getTatData();
 
             }
-        }
-        else if (response instanceof ProvideClaimAssResponse) {
+        } else if (response instanceof ProvideClaimAssResponse) {
             if (response.getStatus_code() == 0) {
                 showMiscPaymentAlert(btnBooked, response.getMessage().toString(), ((ProvideClaimAssResponse) response).getData().get(0));
 
@@ -378,6 +388,6 @@ public class ComplimentaryCreditReportFragment extends BaseFragment implements V
     @Override
     public void OnFailure(Throwable t) {
         cancelDialog();
-        Toast.makeText(getActivity(),t.getMessage(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

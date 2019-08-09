@@ -3,14 +3,8 @@ package com.rb.elite.dashboard;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.rb.elite.BaseFragment;
 import com.rb.elite.BuildConfig;
 import com.rb.elite.HomeActivity;
+import com.rb.elite.MyApplication;
 import com.rb.elite.R;
 import com.rb.elite.core.APIResponse;
 import com.rb.elite.core.IResponseSubcriber;
@@ -93,13 +93,10 @@ public class DashBoardFragment extends BaseFragment implements View.OnClickListe
             getShowCaseView();
         }
 
-      //  showServiceCaseView();
+        //  showServiceCaseView();
 
         return view;
     }
-
-
-
 
 
     private void getShowCaseView() {
@@ -258,7 +255,6 @@ public class DashBoardFragment extends BaseFragment implements View.OnClickListe
                     int serverVersionCode = Integer.parseInt((userConstatntEntity.getVersionCode()));
 
 
-
                     if (BuildConfig.VERSION_CODE < serverVersionCode) {
 
                         int forceUpdate = Integer.parseInt(userConstatntEntity.getIsForceUpdate());
@@ -266,7 +262,7 @@ public class DashBoardFragment extends BaseFragment implements View.OnClickListe
                             // forced update app
                             showPlaystoreDialog("New version available on play store!!!! Please update.");
                         }
-                    }else{
+                    } else {
                         setUserInfo();
                     }
 
@@ -379,11 +375,10 @@ public class DashBoardFragment extends BaseFragment implements View.OnClickListe
 
 
         switch (view.getId()) {
-            case R.id.imgService:
-                Toast.makeText(getActivity(), "ShowcaseService", Toast.LENGTH_SHORT).show();
-                break;
+
             case R.id.cvService:
 
+                ((MyApplication) getActivity().getApplication()).logEvent("CLICKED", "SERVICE", "" + loginEntity.getUser_id());
                 startActivity(new Intent(getActivity(), ServiceActivity.class));
                 break;
 

@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -81,7 +83,7 @@ public class DrivingLicVerifyFragment extends BaseFragment implements View.OnCli
 
     TextView txtCharges, txtPrdName, txtDoc, txtClientName, txtTAT;
     EditText etName, etDOB, etLic;
-
+    CardView cvClient;
 
 
     String PRODUCT_NAME = "";
@@ -292,6 +294,7 @@ public class DrivingLicVerifyFragment extends BaseFragment implements View.OnCli
         ivArrow = (ImageView) view.findViewById(R.id.ivArrow);
         ivLic = (ImageView) view.findViewById(R.id.ivLic);
         ivTick = (ImageView) view.findViewById(R.id.ivTick);
+        cvClient  = (CardView) view.findViewById(R.id.cvClient);
 
         etLic.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(30)});
 
@@ -320,11 +323,26 @@ public class DrivingLicVerifyFragment extends BaseFragment implements View.OnCli
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
+        if(userConstatntEntity.getCompanyId() != null){
+
+            if( (!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals("")) )
+            {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            }else{
+
+                cvClient.setVisibility(View.GONE);
+            }
+        }else {
+            cvClient.setVisibility(View.GONE);
+        }
+
+
 
     }
 

@@ -4,8 +4,6 @@ package com.rb.elite.rto_fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +16,10 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.rb.elite.BaseFragment;
@@ -54,16 +56,16 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
     PrefManager prefManager;
     UserConstatntEntity userConstatntEntity;
 
-    EditText etCity  ;
+    EditText etCity;
     DataBaseController dataBaseController;
     UserEntity loginEntity;
     Button btnBooked;
-
+    CardView cvClient;
     RTOServiceEntity serviceEntity;
 
     ScrollView scrollView;
-    LinearLayout lyVehicle ,lvLogo, lyTAT;
-    RelativeLayout rlDoc ,rlEditVehicle;
+    LinearLayout lyVehicle, lvLogo, lyTAT;
+    RelativeLayout rlDoc, rlEditVehicle;
     ImageView ivLogo, ivClientLogo;
 
     TextView txtCharges, txtPrdName, txtDoc, txtClientName, txtTAT;
@@ -81,7 +83,7 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
 
     //endregion
 
-    EditText etPincode ,etChasing ,etVehicle;
+    EditText etPincode, etChasing, etVehicle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,7 +91,6 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_vehicle_regist_certificate, container, false);
-
 
 
         return view;
@@ -153,6 +154,7 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
         txtDoc = (TextView) view.findViewById(R.id.txtDoc);
         txtClientName = (TextView) view.findViewById(R.id.txtClientName);
         txtTAT = (TextView) view.findViewById(R.id.txtTAT);
+        cvClient = (CardView) view.findViewById(R.id.cvClient);
 
         rlDoc = (RelativeLayout) view.findViewById(R.id.rlDoc);
         rlEditVehicle = (RelativeLayout) view.findViewById(R.id.rlEditVehicle);
@@ -181,24 +183,37 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
         etCity.setOnClickListener(this);
 
 
-
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
-        if(userConstatntEntity.getVehicleno().length() >0)
-        {
+
+        if (userConstatntEntity.getCompanyId() != null) {
+
+            if ((!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals(""))) {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            } else {
+
+                cvClient.setVisibility(View.GONE);
+            }
+        } else {
+            cvClient.setVisibility(View.GONE);
+        }
+
+
+        if (userConstatntEntity.getVehicleno().length() > 0) {
             etVehicle.setText(userConstatntEntity.getVehicleno());
             etVehicle.setEnabled(false);
             rlEditVehicle.setVisibility(View.VISIBLE);
             lyVehicle.setBackgroundColor(getResources().getColor(R.color.bg_edit));
 
 
-        }else{
+        } else {
             lyVehicle.setBackgroundColor(getResources().getColor(R.color.bg_dashboard));
             rlEditVehicle.setVisibility(View.GONE);
             etVehicle.setEnabled(true);
@@ -246,16 +261,15 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
         requestEntity.setChaising_number(etChasing.getText().toString());
 
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.REQUEST_TYPE,"8");
-        bundle.putParcelable(Constants.PRODUCT_PAYMENT_REQUEST,requestEntity);
+        bundle.putString(Constants.REQUEST_TYPE, "8");
+        bundle.putParcelable(Constants.PRODUCT_PAYMENT_REQUEST, requestEntity);
 
 
         getActivity().startActivity(new Intent(getActivity(), PaymentRazorActivity.class)
-                .putExtra(Constants.PAYMENT_REQUEST_BUNDLE,bundle)) ;
+                .putExtra(Constants.PAYMENT_REQUEST_BUNDLE, bundle));
 
 
         getActivity().finish();
-
 
 
     }
@@ -264,17 +278,14 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
         if (!validateVehicle(etVehicle)) {
 
             return false;
-        }
-        else if (!isEmpty(etChasing)) {
+        } else if (!isEmpty(etChasing)) {
             etChasing.requestFocus();
             etChasing.setError("EnterChaissi Number");
             return false;
-        }
-        else if (!validateCity(etCity)) {
+        } else if (!validateCity(etCity)) {
 
             return false;
-        }
-        else if (!validatePinCode(etPincode)) {
+        } else if (!validatePinCode(etPincode)) {
 
             return false;
         }
@@ -293,7 +304,7 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
 
     @Override
     public void onClick(View view) {
-        Constants.hideKeyBoard(view,mContext);
+        Constants.hideKeyBoard(view, mContext);
         switch (view.getId()) {
 
 
@@ -310,8 +321,7 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
 
                 if (validate() == false) {
                     return;
-                }
-                else {
+                } else {
 
                     saveData();
                 }
@@ -359,8 +369,6 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
     }
 
 
-
-
     @Override
     public void OnSuccess(APIResponse response, String message) {
 
@@ -373,8 +381,7 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
                 getTatData();
 
             }
-        }
-       else if (response instanceof RtoProductDisplayResponse) {
+        } else if (response instanceof RtoProductDisplayResponse) {
             if (response.getStatus_code() == 0) {
 
                 if (((RtoProductDisplayResponse) response).getData().size() > 0) {
@@ -389,6 +396,6 @@ public class VehicleRegistCertificateFragment extends BaseFragment implements Vi
     @Override
     public void OnFailure(Throwable t) {
         cancelDialog();
-        Toast.makeText(getActivity(),t.getMessage(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

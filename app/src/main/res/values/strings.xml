@@ -75,6 +75,9 @@
 
 
     </array>
+
+    <string name="reg_msg">Please Enter Your Vehicle Registration Number Or</string>
+    <string name="reg_policy">Policy Number</string>
     <string name="profile_msg">Please complete your Profile for getting full benefit of app. </string>
     <string name="error_Msg">Something went wrong on server side. Please Contact to Admin Person</string>
 

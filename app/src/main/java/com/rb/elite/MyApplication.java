@@ -1,12 +1,17 @@
 package com.rb.elite;
 
 import android.app.Application;
+import android.os.Bundle;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
 public class MyApplication extends Application {
+
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -24,5 +29,18 @@ public class MyApplication extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+
+        mFirebaseAnalytics =FirebaseAnalytics.getInstance(this);
     }
+
+    public void logEvent(String ServiceName,String ServiceID,String ID){
+
+        Bundle bundle = new Bundle();
+        bundle.putString(ServiceName,ServiceID);
+        bundle.putString("User",ID);
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT,bundle);
+    }
+
+
 }

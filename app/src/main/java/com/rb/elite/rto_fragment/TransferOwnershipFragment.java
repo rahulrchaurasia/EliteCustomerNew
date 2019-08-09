@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
@@ -64,6 +65,7 @@ public class TransferOwnershipFragment extends BaseFragment implements View.OnCl
     LinearLayout lyVehicle ,lvLogo, lyTAT;
     RelativeLayout rlDoc ,rlEditVehicle;
     ImageView ivLogo, ivClientLogo;
+    CardView cvClient;
 
     TextView txtCharges, txtPrdName, txtDoc, txtClientName, txtTAT;
 
@@ -151,6 +153,7 @@ public class TransferOwnershipFragment extends BaseFragment implements View.OnCl
         etVehicle = (EditText) view.findViewById(R.id.etVehicle);
         etPincode  = (EditText) view.findViewById(R.id.etPincode);
         etNewOwner = (EditText) view.findViewById(R.id.etNewOwner);
+        cvClient  = (CardView) view.findViewById(R.id.cvClient);
 
         txtCharges = (TextView) view.findViewById(R.id.txtCharges);
         txtPrdName = (TextView) view.findViewById(R.id.txtPrdName);
@@ -191,11 +194,27 @@ public class TransferOwnershipFragment extends BaseFragment implements View.OnCl
     }
 
     private void bindData() {
-        Glide.with(getActivity())
-                .load(userConstatntEntity.getCompanylogo())
-                .into(ivClientLogo);
 
-        txtClientName.setText(userConstatntEntity.getCompanyname());
+
+        if(userConstatntEntity.getCompanyId() != null){
+
+            if( (!userConstatntEntity.getCompanyId().equals("0")) && (!userConstatntEntity.getCompanyId().equals("")) )
+            {
+                cvClient.setVisibility(View.VISIBLE);
+                Glide.with(getActivity())
+                        .load(userConstatntEntity.getCompanylogo())
+                        .into(ivClientLogo);
+
+                txtClientName.setText(userConstatntEntity.getCompanyname());
+            }else{
+
+                cvClient.setVisibility(View.GONE);
+            }
+        }else {
+            cvClient.setVisibility(View.GONE);
+        }
+
+
         if(userConstatntEntity.getVehicleno().length() >0)
         {
             etVehicle.setText(userConstatntEntity.getVehicleno());
