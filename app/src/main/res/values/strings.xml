@@ -39,7 +39,7 @@
         Group, will be raised to new heights of increasingly remarkable experiences.
     </string>
 
-    <string name="aboutUs_four">As an Elite customer, you would benet from a range of extended services that we believe reinforces
+    <string name="aboutUs_four">As an Elite customer, you would benefit from a range of extended services that we believe reinforces
         our commitment in making your experience with us a lot more rewarding.
     </string>
 
@@ -77,7 +77,7 @@
     </array>
 
     <string name="reg_msg">Please Enter Your Vehicle Registration Number Or</string>
-    <string name="reg_policy">Policy Number</string>
+    <string name="reg_msg_oth">Policy Number</string>
     <string name="profile_msg">Please complete your Profile for getting full benefit of app. </string>
     <string name="error_Msg">Something went wrong on server side. Please Contact to Admin Person</string>
 

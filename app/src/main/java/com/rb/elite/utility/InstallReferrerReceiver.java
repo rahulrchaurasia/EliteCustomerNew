@@ -5,8 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.google.gson.JsonElement;
+
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rb.elite.splash.PrefManager;
 
 /**
@@ -25,7 +26,7 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
         Log.d(TAG, "Referrer Code" + referrer);
 
         try {
-            JsonObject jsonObject = new JsonObject().getAsJsonObject(referrer);
+            JsonObject jsonObject = new JsonParser().parse(referrer).getAsJsonObject();
             if (jsonObject.has("company_id")) {
                 String companyID = String.valueOf(jsonObject.get("company_id"));
                 String companyName = String.valueOf(jsonObject.get("company_name"));
@@ -35,6 +36,7 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
             }
         }catch (Exception ex)
         {
+            Log.d(TAG, "Referrer Error" + ex.getMessage().toString());
 
         }
 

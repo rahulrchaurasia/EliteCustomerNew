@@ -24,7 +24,7 @@ public class PrefManager {
     SharedPreferences.Editor editor;
     Context _context;
     String TAG = "ERROR_TAG";
-
+    String TAG_REFERRER = "REFERRER";
     // shared pref mode
     int PRIVATE_MODE = 0;
 
@@ -312,6 +312,7 @@ public class PrefManager {
 
     //region Company Identification
     public void setCompanyID(String compID , String compName) {
+        Log.d(TAG_REFERRER,"Company ID" +compID + " And " + compName );
         editor.putString(ELITE_COMPANY_ID, compID);
         editor.putString(ELITE_COMPANY_NAME, compName);
 

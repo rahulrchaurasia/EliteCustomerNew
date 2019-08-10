@@ -6,7 +6,7 @@ android {
         applicationId "com.rb.elite"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 11
+        versionCode 12
         versionName "1.0.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

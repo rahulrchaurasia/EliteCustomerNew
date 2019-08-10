@@ -41,6 +41,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     String strToken;
     Button btnSignIn;
     String deviceId = "";
+    String TAG = "REFERRER";
 
 
     String[] perms = {
@@ -105,14 +106,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     // based On CompanyWise
     private void registrationDecision() {
 
-//        if (prefManager.getCompanyID().trim().length() > 0) {
-//
-//            startActivity(new Intent(LoginActivity.this, ClientDeclareActivity.class));
-//        } else {
-//            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-//        }
+        if (prefManager.getCompanyID().trim().equals("0")) {
 
-        startActivity(new Intent(LoginActivity.this, ClientDeclareActivity.class));
+            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+
+        } else {
+            startActivity(new Intent(LoginActivity.this, ClientDeclareActivity.class));
+        }
+
+
     }
 
     @Override
@@ -120,8 +122,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         Constants.hideKeyBoard(view, LoginActivity.this);
         switch (view.getId()) {
             case R.id.tvRegistration:
-                //
-                // Changes For common app 05
+
                 registrationDecision();
 
                 break;
@@ -130,6 +131,35 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
                 break;
             case R.id.btnSignIn:
+
+
+                //region referrer testing
+                /*
+
+
+                String referrer = "{\"company_id\":\"1\",\"company_name\":\"Reliance\"}";
+                Log.d(TAG, "Referrer Code" + referrer);
+
+                try {
+
+                    JsonObject jsonParser = new JsonParser().parse(referrer).getAsJsonObject();
+                    JsonElement id = jsonParser.get("company_id");
+
+
+                    JSONObject jsonObject = new JSONObject(referrer);
+                    if (jsonObject.has("company_id")) {
+                        String companyID = String.valueOf(jsonObject.get("company_id"));
+                        String companyName = String.valueOf(jsonObject.get("company_name"));
+                        prefManager.setCompanyID(companyID, companyName);
+                    }
+                } catch (Exception ex) {
+                    Log.d(TAG, "Referrer Error" + ex.getMessage().toString());
+
+                }
+
+              */
+                //endregion
+
                 if (!isEmpty(etMobile)) {
                     etMobile.requestFocus();
                     Snackbar.make(etMobile, "Enter Mobile", Snackbar.LENGTH_LONG).show();

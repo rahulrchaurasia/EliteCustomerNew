@@ -64,7 +64,7 @@ public class ClientDeclareActivity extends BaseActivity implements IResponseSubc
     private void bindData() {
 
         txtTitle.setText(prefManager.getCompanyName());
-        txtMessage.setText(getResources().getString(R.string.reg_msg) + " " + prefManager.getCompanyName() + " " + getResources().getString(R.string.reg_policy));
+        txtMessage.setText(getResources().getString(R.string.reg_msg) + " " + prefManager.getCompanyName() + " " + getResources().getString(R.string.reg_msg_oth));
     }
 
     private void setListener() {
