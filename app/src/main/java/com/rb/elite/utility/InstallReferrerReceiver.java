@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.rb.elite.splash.PrefManager;
 
 /**
@@ -21,22 +18,44 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        String referrer = intent.getStringExtra("referrer");
+        if (intent.getStringExtra("referrer") != null) {
 
-        Log.d(TAG, "Referrer Code" + referrer);
 
-        try {
-            JsonObject jsonObject = new JsonParser().parse(referrer).getAsJsonObject();
-            if (jsonObject.has("company_id")) {
-                String companyID = String.valueOf(jsonObject.get("company_id"));
-                String companyName = String.valueOf(jsonObject.get("company_name"));
-                prefManager = new PrefManager(context);
+            String referrer = intent.getStringExtra("referrer");
 
-                prefManager.setCompanyID(companyID,companyName);
+            Log.d(TAG, "Referrer Code" + referrer);
+
+//            try {
+//                JsonObject jsonObject = new JsonParser().parse(referrer).getAsJsonObject();
+//                if (jsonObject.has("company_id")) {
+//                    String companyID = String.valueOf(jsonObject.get("company_id"));
+//                    String companyName = String.valueOf(jsonObject.get("company_name"));
+//                    prefManager = new PrefManager(context);
+//
+//                    prefManager.setCompanyID(companyID, companyName);
+//                }
+//            } catch (Exception ex) {
+//                Log.d(TAG, "Referrer Error" + ex.getMessage());
+//
+//            }
+            try {
+
+                if(referrer.contains("@")) {
+                    String[] splitArray = referrer.split("@");
+                    if (splitArray[0] != null && splitArray[1] != null) {
+
+                        prefManager = new PrefManager(context);
+                        String companyID = splitArray[0];
+                        String companyName = splitArray[1];
+                        prefManager.setCompanyID(companyID, companyName);
+
+                    }
+                }
+            } catch (Exception ex) {
+                Log.d(TAG, "Referrer Error" + ex.getMessage());
+
             }
-        }catch (Exception ex)
-        {
-            Log.d(TAG, "Referrer Error" + ex.getMessage().toString());
+
 
         }
 

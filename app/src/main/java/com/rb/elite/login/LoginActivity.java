@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rb.elite.BaseActivity;
 import com.rb.elite.HomeActivity;
 import com.rb.elite.R;
@@ -29,6 +33,8 @@ import com.rb.elite.splash.PrefManager;
 import com.rb.elite.utility.Constants;
 import com.rb.elite.utility.ReadDeviceID;
 import com.rb.elite.utility.Utility;
+
+import org.json.JSONObject;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener, IResponseSubcriber {
 
@@ -133,31 +139,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.btnSignIn:
 
 
+
                 //region referrer testing
-                /*
+            //    String referrer = "1@Reliance";
+               // String referrer = "eutm_source=google-play&utm_medium=organic";
+//                if(referrer.contains("@")) {
+//
+//                    String[] splitArray = referrer.split("@");
+//
+//                    String companyID = splitArray[0];
+//                    String companyName = splitArray[1];
+//                    prefManager.setCompanyID(companyID, companyName);
+//
+//                }
 
 
-                String referrer = "{\"company_id\":\"1\",\"company_name\":\"Reliance\"}";
-                Log.d(TAG, "Referrer Code" + referrer);
-
-                try {
-
-                    JsonObject jsonParser = new JsonParser().parse(referrer).getAsJsonObject();
-                    JsonElement id = jsonParser.get("company_id");
-
-
-                    JSONObject jsonObject = new JSONObject(referrer);
-                    if (jsonObject.has("company_id")) {
-                        String companyID = String.valueOf(jsonObject.get("company_id"));
-                        String companyName = String.valueOf(jsonObject.get("company_name"));
-                        prefManager.setCompanyID(companyID, companyName);
-                    }
-                } catch (Exception ex) {
-                    Log.d(TAG, "Referrer Error" + ex.getMessage().toString());
-
-                }
-
-              */
                 //endregion
 
                 if (!isEmpty(etMobile)) {

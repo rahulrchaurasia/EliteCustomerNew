@@ -61,13 +61,12 @@ public class HomeActivity extends BaseActivity implements IResponseSubcriber {
     boolean doubleBackToExitPressedOnce = false;
     private Toolbar toolbar;
     public static int navItemIndex = 0;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+
 
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
-    TextView textNotifyItemCount, txtVehicle, txtName;
+    TextView textNotifyItemCount, txtVehicle, txtName,txtVersion;
 
     UserEntity loginEntity;
     UserConstatntEntity userConstatntEntity;
@@ -166,6 +165,9 @@ public class HomeActivity extends BaseActivity implements IResponseSubcriber {
         View headerView = navigationView.getHeaderView(0);
         txtName = (TextView) headerView.findViewById(R.id.txtName);
         txtVehicle = (TextView) headerView.findViewById(R.id.txtVehicle);
+        txtVersion = (TextView) headerView.findViewById(R.id.txtVersion);
+
+        txtVersion.setText("Version " + BuildConfig.VERSION_NAME);
 
         if (loginEntity != null) {
             txtName.setText("" + loginEntity.getName());
@@ -174,6 +176,7 @@ public class HomeActivity extends BaseActivity implements IResponseSubcriber {
             txtName.setText("");
 
         }
+
 
         if (userConstatntEntity != null) {
             txtVehicle.setText("" + userConstatntEntity.getVehicleno());
@@ -187,7 +190,7 @@ public class HomeActivity extends BaseActivity implements IResponseSubcriber {
         }
     }
 
-    private void getNotificationAction() {
+    private void    getNotificationAction() {
 
         // region Activity Open Usnig Notification
 

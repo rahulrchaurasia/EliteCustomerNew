@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
-    android:minHeight="170dp"
+    android:minHeight="180dp"
     android:orientation="vertical">
 
 
@@ -37,12 +37,13 @@
         android:textColor="@color/white" />
 
     <TextView
-        android:id="@+id/txtother"
+        android:id="@+id/txtVersion"
         style="@style/TextViewStyle.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:textColor="@color/white"
-        android:visibility="gone" />
+        android:text=""
+        android:visibility="visible" />
 
 </LinearLayout>

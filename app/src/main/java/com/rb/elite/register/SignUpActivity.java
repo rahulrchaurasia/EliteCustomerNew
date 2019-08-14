@@ -113,6 +113,7 @@ public class SignUpActivity extends BaseActivity implements IResponseSubcriber, 
         lyModel.setVisibility(View.VISIBLE);
         lyVehicle.setVisibility(View.VISIBLE);
 
+        etFullName.setEnabled(false);
         etVehicle.setEnabled(false);
         acMake.setEnabled(false);
         acModel.setEnabled(false);

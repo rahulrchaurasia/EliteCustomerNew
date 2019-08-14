@@ -470,10 +470,14 @@ public class MyProfileFragment extends BaseFragment implements IResponseSubcribe
         etState.setText("" + profile.getState_id());
 
         etMobile.setEnabled(false);
+        etFullName.setEnabled(false);
 
         if (profile.getVehicle_no().trim().length() > 0) {
             etVehicle.setEnabled(false);
             btnGo.setVisibility(View.GONE);
+        }else {
+            etVehicle.setEnabled(true);
+            btnGo.setVisibility(View.VISIBLE);
         }
     }
 
