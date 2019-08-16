@@ -260,7 +260,7 @@ public class AddressEndorsementFragment  extends BaseFragment implements View.On
         }
         else if (!isEmpty(etCorrect)) {
             etCorrect.requestFocus();
-            etCorrect.setError("Enter Vehicle Finanace From");
+            etCorrect.setError("Enter Vehicle Finance From");
             return false;
         }
         else if (!validateCity(etCity)) {
