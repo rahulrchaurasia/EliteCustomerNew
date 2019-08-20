@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".insurance.InsuranceFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSubmit"
+        android:layout_alignParentTop="true"
+        android:overScrollMode="ifContentScrolls"
+        android:paddingBottom="10dp"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@color/bg_dashboard"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/txtInsuranceName"
+                            style="@style/TextViewStyle.MediumRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Select Type Of Insurance" />
+
+                        <EditText
+                            android:id="@+id/etName"
+                            style="@style/Style.edittext"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:clickable="true"
+                            android:drawableRight="@drawable/ic_drop_down"
+                            android:focusable="false"
+                            android:inputType="textMultiLine"
+                            android:maxLines="3"
+                            android:singleLine="true" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lyOther"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Please Specify Other">
+
+
+                            <EditText
+                                android:id="@+id/etOther"
+                                style="@style/Style.edittext"
+                                android:layout_width="match_parent"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:padding="@dimen/activity_horizontal_margin" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/txtInsuranceCompany"
+                            style="@style/TextViewStyle.MediumRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="Prefered Insurance Company" />
+
+
+                        <EditText
+                            android:id="@+id/etCompany"
+                            style="@style/EditTextStyle"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_drop_down"
+                            android:ellipsize="end"
+                            android:focusable="false"
+                            android:inputType="textMultiLine"
+                            android:maxLines="4" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <TextView
+                            style="@style/TextViewStyle.MediumRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:text="Preferred Date Time" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Select Date">
+
+                            <EditText
+                                android:id="@+id/etDate"
+                                style="@style/Style.edittext"
+                                android:layout_width="match_parent"
+                                android:drawableRight="@drawable/vector_date"
+                                android:focusable="false"
+                                android:padding="@dimen/activity_horizontal_margin" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="100"
+                            android:orientation="horizontal">
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="50"
+                                android:layout_marginRight="5dp"
+                                android:hint="From Time">
+
+                                <EditText
+                                    android:id="@+id/etStartTime"
+                                    style="@style/Style.edittext"
+                                    android:layout_width="match_parent"
+                                    android:focusable="false"
+                                    android:padding="@dimen/activity_horizontal_margin" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="50"
+                                android:layout_marginLeft="5dp"
+                                android:hint="To Time">
+
+
+                                <EditText
+                                    android:id="@+id/etEndTime"
+                                    style="@style/Style.edittext"
+                                    android:layout_width="match_parent"
+                                    android:focusable="false"
+                                    android:padding="@dimen/activity_horizontal_margin" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Any Specific Instruction">
+
+
+                            <EditText
+                                android:id="@+id/etInstruction"
+                                style="@style/Style.edittext"
+                                android:layout_width="match_parent"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:padding="@dimen/activity_horizontal_margin" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:layout_marginEnd="4dp"
+        android:text="Submit" />
+
+
+</RelativeLayout>

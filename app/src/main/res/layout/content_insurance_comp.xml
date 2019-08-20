@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/lvParent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".insurance.companyDetail.InsuranceCompActivity"
+    tools:showIn="@layout/activity_insurance_comp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lySubmit"
+        android:id="@+id/rvCompany"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/lySubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            style="@style/TextViewStyle.MediumBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Note: Maximum 3 Company can be selected"/>
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_marginTop="5dp"
+
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SUBMIT"
+            style="@style/ButtonGreen"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

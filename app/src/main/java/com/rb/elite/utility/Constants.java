@@ -35,6 +35,7 @@ public class Constants {
     public static String CHAT_REQUEST_DATA = "ELITE_CHAT_REQUEST_DATA";
 
     public static int SEARCH_CITY_CODE = 5;
+    public static int COMPANY_INSURANCE_CODE = 6;
     public static int ORDER_CODE = 2;
     public static int UPLOAD_FILE = 4;
     public static int REQUEST_CODE = 22;

@@ -23,10 +23,10 @@
             android:visible="false"
             android:title="Request Detail" />
 
-        <!--<item-->
-            <!--android:id="@+id/nav_doc"-->
-            <!--android:icon="@drawable/document_checked_menu"-->
-            <!--android:title="Document" />-->
+        <item
+            android:id="@+id/nav_insurance"
+            android:icon="@drawable/insurance_icons"
+            android:title="Schedule Call" />
 
 
 

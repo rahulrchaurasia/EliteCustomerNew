@@ -43,6 +43,7 @@ import com.rb.elite.core.model.UserConstatntEntity;
 import com.rb.elite.core.model.UserEntity;
 import com.rb.elite.core.response.UserConsttantResponse;
 import com.rb.elite.dashboard.DashBoardFragment;
+import com.rb.elite.insurance.InsuranceFragment;
 import com.rb.elite.login.ChangePasswordFragment;
 import com.rb.elite.login.LoginActivity;
 import com.rb.elite.notification.NotificationActivity;
@@ -75,7 +76,7 @@ public class HomeActivity extends BaseActivity implements IResponseSubcriber {
 
     private static final String TAG_HOME = "Home";
     private static final String TAG_PROFILE = "Profile";
-    private static final String TAG_ORDER = "Request Detail";
+    private static final String TAG_ORDER = "Schedule Call";
     private static final String TAG_DOC = "Document Upload";
     private static final String TAG_ABOUT = "About US";
     private static final String TAG_TERMS = "Terms And Condition";
@@ -269,10 +270,9 @@ public class HomeActivity extends BaseActivity implements IResponseSubcriber {
                         CURRENT_TAG = TAG_PROFILE;
                         break;
 
-                    case R.id.nav_order:
-//                        navItemIndex = 2;
-//                        CURRENT_TAG = TAG_ORDER;
-                        startActivity(new Intent(HomeActivity.this, DemActivity.class));
+                    case R.id.nav_insurance:
+                        navItemIndex = 2;
+                        CURRENT_TAG = TAG_ORDER;
                         break;
 
 
@@ -379,8 +379,8 @@ public class HomeActivity extends BaseActivity implements IResponseSubcriber {
                 return fragment;
 
             case 2:
-                fragment = new OrderDetailFragment();
-                getSupportActionBar().setTitle("Request Detail");
+                fragment = new InsuranceFragment();
+                getSupportActionBar().setTitle("Schedule Call");
                 return fragment;
 
 //            case 3:

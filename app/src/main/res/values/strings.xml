@@ -144,5 +144,6 @@
     <string name="title_activity_transfer_ownership">TransferOwnership</string>
     <string name="title_activity_rate">Rating</string>
     <string name="title_activity_chat">Chat</string>
+    <string name="title_activity_insurance_comp">Insurance Company</string>
 
 </resources>
