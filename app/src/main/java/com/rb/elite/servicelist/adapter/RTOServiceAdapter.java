@@ -73,7 +73,7 @@ public class RTOServiceAdapter extends RecyclerView.Adapter<RTOServiceAdapter.Pr
 
         holder.txtTitle.setText( "" +entity.getName());
 
-        Glide.with(mContext).load(entity.getProduct_logo())
+        Glide.with(mContext.getActivity()).load(entity.getProduct_logo())
                 .fitCenter()
                 .placeholder(R.drawable.elite_placeholder)
                 .crossFade(1000)
