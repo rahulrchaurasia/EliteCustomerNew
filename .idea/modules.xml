@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EliteCustomerNew.iml" filepath="$PROJECT_DIR$/EliteCustomerNew.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/EliteCustomerNew-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/EliteCustomerNew-app.iml" group="EliteCustomerNew/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/EliteProjectCompany-EliteCustomerNew.iml" filepath="$PROJECT_DIR$/.idea/modules/EliteProjectCompany-EliteCustomerNew.iml" group="EliteCustomerNew" />
       <module fileurl="file://$PROJECT_DIR$/Elite_Customer.iml" filepath="$PROJECT_DIR$/Elite_Customer.iml" />
       <module fileurl="file://$PROJECT_DIR$/Elite_customer.iml" filepath="$PROJECT_DIR$/Elite_customer.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
